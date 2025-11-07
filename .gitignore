@@ -149,6 +149,9 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 
+minikube-linux-amd64
+**/minikube-linux-amd64
+
 # Cython debug symbols
 cython_debug/
 
