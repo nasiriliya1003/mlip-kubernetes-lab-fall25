@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name:  flask-backend-deployment
+  name: flask-backend-deployment
 spec:
   replicas: 2
   selector:
@@ -14,18 +14,18 @@ spec:
     spec:
       containers:
       - name: flask-backend
-        # TODO: Replace <DockerHub-Username> with your Docker Hub username, and use the appropriate image name and tag
-        image: <DockerHub-Username>/<backend-image-name>:<backend-image-tag>
+        image: niliya1003/user-engagement-backend:1.0.0
         ports:
         - containerPort: 5001
+        # IMPLEMENTATION: Added lifecycle hook for graceful shutdown
         lifecycle:
           preStop:
-            ## TODO: implement this so that backend.py handles SIGTERM and logs a message
-
+            exec:
+              command: ["/bin/sh", "-c", "sleep 10"]  # Give time for SIGTERM handling
         volumeMounts:
         - name: model-volume
           mountPath: /shared-volume
-          readOnly: true  # Backend only needs read access
+          readOnly: true
       volumes:
       - name: model-volume
         persistentVolumeClaim:
@@ -34,7 +34,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name:  flask-backend-service # TODO: Specify a unique service name if deploying multiple services
+  name: flask-backend-service
 spec:
   type: ClusterIP
   selector:

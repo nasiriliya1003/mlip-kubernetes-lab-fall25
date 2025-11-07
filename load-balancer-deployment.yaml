@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: flask-load-balancer
-        # TODO: Replace <DockerHub-Username> with your Docker Hub username, and use the appropriate image name and tag
-        image: <DockerHub-Username>/<load-balancer-image-name>:<load-balancer-image-tag>
+        # IMPLEMENTATION: Updated with your Docker Hub username
+        image: niliya1003/user-engagement-loadbalancer:1.0.0
         ports:
         - containerPort: 8080
 ---
@@ -31,4 +31,4 @@ spec:
     - name: http
       port: 8080          # service port inside cluster
       targetPort: 8080    # pod/container port
-      nodePort: 30080   
+      nodePort: 30080
