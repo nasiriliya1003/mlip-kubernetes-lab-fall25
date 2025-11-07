@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import joblib
 from datetime import datetime
+import os
 
 def generate_synthetic_user_data(n_samples):
     """
@@ -50,15 +51,22 @@ def train_model():
         
         # TODO: Train model to predict Y given X
         # you can use any model but we suggest (and import) RandomForestRegressor
-        model = ...
+        model = RandomForestRegressor(n_estimators=100, random_state=42)
+        model.fit(X,y)
+
+        # calculate training score
+        train_score = model.score(X, y)
+        print(f"[{datetime.now()}] Model training completed with R² score: {train_score:.4f}")
         
         # Save model and metadata
         model_info = {
             'model': model,
             'feature_names': list(X.columns),
-            'training_time': datetime.now().isoformat()
+            'training_time': datetime.now().isoformat(),
+            'training_score': train_score
         }
         
+        # Save model
         joblib.dump(model_info, '/shared-volume/model.joblib') # TODO: replace this
         
         print(f"[{datetime.now()}] Model trained and saved")
